@@ -1,5 +1,6 @@
 package br.com.rocketseat.main.modules.candidate.controllers;
 
+import br.com.rocketseat.main.modules.candidate.DTOs.ProfileCandidateResponseDTO;
 import br.com.rocketseat.main.modules.candidate.entities.CandidateEntity;
 import br.com.rocketseat.main.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.rocketseat.main.modules.candidate.useCases.ListAllJobsByFilterUseCase;
@@ -36,6 +37,19 @@ public class CandidateController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(name = "Candidato", description = "Informações do candidato")
+    @SecurityRequirement(name = "jwt_auth")
+    @Operation(
+            summary = "Perfil do candidato",
+            description = "Essa função é responsável por buscar as informações do perfil do candidato."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(array = @ArraySchema(schema = @Schema(implementation = ProfileCandidateResponseDTO.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "User not found")
+
+    })
     public ResponseEntity<Object> get(HttpServletRequest request) {
         var candidateId = request.getAttribute("candidate_id");
         try {
