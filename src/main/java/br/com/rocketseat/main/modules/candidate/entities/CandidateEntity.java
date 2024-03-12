@@ -1,5 +1,6 @@
 package br.com.rocketseat.main.modules.candidate.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,11 @@ public class CandidateEntity {
     private String email;
 
     @Length(max = 100, min = 6, message = "O campo [password] deve conter entre 6 e 100 caracteres.")
+    @Schema(example = "admin@1234",
+            minLength = 6,
+            maxLength = 100,
+            description = "Senha do candidato.",
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private String password;
 
     private String name;
