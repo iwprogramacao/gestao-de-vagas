@@ -18,6 +18,12 @@ public class SecurityConfig {
     @Autowired
     private SecurityCandidateFilter securityCandidateFilter;
 
+    private static final String[] SWAGGER_LIST = {
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "swagger-resources/**"
+    };
+
     // Define como um objeto gerenciável pelo Spring (Sem ele, o Spring faz suas configurações automáticas)
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -30,6 +36,8 @@ public class SecurityConfig {
                     .requestMatchers("/company/auth")
                     .permitAll()
                     .requestMatchers("/candidate/auth")
+                    .permitAll()
+                    .requestMatchers(SWAGGER_LIST)
                     .permitAll();
 
                 auth.anyRequest()
