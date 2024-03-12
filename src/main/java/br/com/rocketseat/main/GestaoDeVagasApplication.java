@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+/* Configuração definida na classe SwaggerConfigurations
 @OpenAPIDefinition(info =
     @Info(
         title = "Gestão de Vagas",
@@ -22,7 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         bearerFormat = "JWT",
         type = SecuritySchemeType.HTTP,
         in = SecuritySchemeIn.HEADER
-)
+)*/
 public class GestaoDeVagasApplication {
 
     public static void main(String[] args) {
