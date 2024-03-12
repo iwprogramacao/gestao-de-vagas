@@ -1,5 +1,6 @@
 package br.com.rocketseat.main.modules.company.entities;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -31,9 +32,12 @@ public class JobEntity {
     private UUID companyId;
 
     @NotBlank(message = "O campo [level] é obrigatório.")
+    @Schema(example = "Sênior")
     private String level;
 
+    @Schema(example = "Vaga para designer.")
     private String description;
+    @Schema(example = "Gympass, plano de saúde.")
     private String benefits;
 
     @CreationTimestamp
