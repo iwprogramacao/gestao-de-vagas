@@ -1,11 +1,13 @@
 package br.com.rocketseat.main.modules.company.controllers;
 
+import br.com.rocketseat.main.exceptions.CompanyNotFoundException;
 import br.com.rocketseat.main.modules.company.DTOs.CreateJobDTO;
 import br.com.rocketseat.main.modules.company.entities.CompanyEntity;
 import br.com.rocketseat.main.modules.company.repositories.CompanyRepository;
 import br.com.rocketseat.main.utils.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +23,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @RunWith(SpringRunner.class) // Define a forma de rodar a aplicação
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // Define uma porta randômica para o teste
@@ -72,4 +77,21 @@ public class CreateJobControllerTest {
         System.out.println(result);
     }
 
+    @Test
+    public void shoud_not_be_able_to_create_a_new_job_if_company_not_found() throws Exception {
+        var createdJobDTO = CreateJobDTO.builder()
+                                        .benefits("Benefits test")
+                                        .description("Description test")
+                                        .level("Level test")
+                                        .build();
+
+        mvc.perform(MockMvcRequestBuilders.post("/company/job")
+                                          .contentType(MediaType.APPLICATION_JSON)
+                                          .content(TestUtils.objectToJSON(createdJobDTO))
+                                          .header("Authorization", TestUtils.generateToken(UUID.randomUUID(), jwtSecret)))
+           .andExpect(MockMvcResultMatchers.status()
+                                           .isBadRequest());
+
+    }
 }
+
